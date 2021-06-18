@@ -1,20 +1,20 @@
-# Basic Windsor Tutorial
+#基础Windsor教程
 
-The intent of this tutorial is to provide the most basic exposure to Windsor and minimal steps to use. For deeper coverage, see additional tutorials hosted on this site. Aside from Visual Studio, The only external tools necessary to complete this tutorial is the Castle Windsor component. This tutorial uses Castle Windsor version 2.5.3, and .NET Framework 3.5.
+本教程旨在提供对Windsor最基础的接触和最少的使用步骤，如果要深入了解，请查看站点的其他教程。除了Visual Studio之外，本教程所需要的唯一外部工具就是Castle Windsor组件。本教程使用Castle Windsor 2.5.3和.NET Framework 3.5.版本进行演示。
 
-It is assumed you have familiarity with Inversion of Control concepts but no prior familiarity with Windsor. Also, it is assumed you have an understanding of C# concepts, such as interfaces.
+现在假设你已经熟悉控制反转的概念但是对Windsor并不熟悉，并且已经了解一些有关C#的概念性知识，例如接口。
 
-## Getting Started
+##开始
 
-Download the Windsor components. Directions how to get Windsor are located [here](mvc-tutorial-part-1-getting-windsor.md), but these instructions are for a different, more detailed tutorial, and do not refer back to this tutorial.
+下载Windsor组件，关于如何下载Windsor请点击[这里](mvc-tutorial-part-1-getting-windsor.md)，这些都是不同、更详细的教程，并且不需要参考本教程。
 
-The premise of this tutorial is based on two projects - a windows form project, and a class library, both in the same solution. To follow the tutorial it is probably easiest to use the same names. I have called the new solution "CastleWindsorExample", the windows forms project is also called "CastleWindsorExample", and the class library is called "ClassLibrary1".
+本教程基于两个项目 - 一个windows form应用程序项目和一个类库项目，两个项目都在同一个解决方案下。在接下来的教程中，创建与本教程相同的命名相对来说是最简单的方式。我已经创建了一个名为“CastleWindsorExample”的解决方案，其中，windows forms项目叫做“CastleWindsorExample”，类库项目叫做“ClassLibrary1”。
 
-## Create Class Library
+##创建类库项目
 
-In the project ClassLibrary1, add two interfaces - IDependency1 and IDependency2 (fictional names I made up - these names could be anything)
+在ClassLibrary1项目中，添加两个接口文件 - IDependency1和IDependency2（这些名字是我虚构的 - 它们可以是任意的其他名字）
 
-The interface IDependency1 has the following definition...
+IDependency1接口内容如下 ...
 
 ```csharp
 namespace ClassLibrary1
@@ -26,7 +26,7 @@ namespace ClassLibrary1
 }
 ```
 
-The interface IDependency2 has the following definition...
+IDendency2接口内容如下 ...
 
 ```csharp
 namespace ClassLibrary1
@@ -38,9 +38,9 @@ namespace ClassLibrary1
 }
 ```
 
-Now, create two classes that will be the actual implementation of these classes. My example uses classes Dependency1 and Dependency2.
+现在，创建两个实现类。本教程中创建了Dependency1和Dependency2两个类。
 
-The definition of dependency1 is ...
+dependency1内容如下 ...
 
 ```csharp
 namespace ClassLibrary1
@@ -52,7 +52,7 @@ namespace ClassLibrary1
 }
 ```
 
-The definition for dependency2 is ...
+dependency2内容如下 ...
 
 ```csharp
 namespace ClassLibrary1
@@ -64,11 +64,11 @@ namespace ClassLibrary1
 }
 ```
 
-Notice they inherit from the interfaces.
+注意，它们继承自前面那些接口。
 
-Create a new class called Main. This is the entry point class to the library.
+创建一个新的类Main，这将作为类库程序的入口点。
 
-The definition for main is:
+main内容如下：
 
 ```csharp
 namespace ClassLibrary1
@@ -93,17 +93,17 @@ namespace ClassLibrary1
 }
 ```
 
-Notice the constructor requires two parameters, the same as the interfaces. Here we are injecting the dependencies rather than creating an instance of each. We cannot create an object from the main class unless we also provide the two dependencies.
+请注意，该类的构造函数中需要两个参数。在这里，我们不创建实例，而是为其注入依赖。我们不能为main类创建一个对象除非我们为其提供两个依赖项。
 
-## Use Class Library
+## 使用类库
 
-Up to this point, we have 3 classes, and two interfaces. Because this example is so simple, there is not much functionality in this program. Our class library ClassLibrary1 exposes 3 object types, and has nothing to do with Windsor - yet. We now shift our attention to the Windows Forms project 'CastleWindsorExample'.
+到这里，我们已经有了三个类和两个接口。因为这个例子非常简单，项目中并没有很多的方法，我们的类库ClassLibrary1对外暴露了三种对象类型，而且与Windsor没有任何联系 - 暂时。现在，我们将注意力放在Windows Forms项目“CastleWindsorExample”上。
 
-In the project CastleWindsorExample add three references, a reference to the ClassLibrary1 project, to Castle.Core, and Castle.Windsor (Downloaded Castle Windsor components).
+在CastleWindsorExample项目中，添加三个引用，对ClassLibrary1项目、Castle.Core和Castle.Windsor的引用（下载Castle Windsor组件）。
 
-My default windows forms project started me with a file Form1.cs. I will add a button to this form called button1. In the button1_Click event we will wire up the class library. This is the heart of Castle Windsor. Everything up to this point is preparation.
+我的windows forms项目默认从Form1.cs文件开始。我将要添加一个名为button1的按钮到这个窗口。在button1_Click事件中我将把它关联到类库文件中。这是Castle Windsor的核心。到目前为止，所有的东西都还在准备过程中。
 
-The file Form1.cs file contains...
+Form1.cs文件内容如下 ...
 
 ```csharp
 using Castle.MicroKernel.Registration;
@@ -123,8 +123,8 @@ private void button1_Click(object sender, EventArgs e)
 }
 ```
 
-If you set a breakpoint in the constructor of main, you will see the dependencies are defined. The code we implemented never created instances of dependency1 or dependency2. Windsor did this for us. The AddComponent methods perform the wireup for the application.
+如果在main函数的构造函数中设置一个断点，你会发现依赖已经被定义。代码会自动实现未创建的dependency1或dependency2实例。Windsor帮助我们完成了这个工作。还可以通过AddComponent方法来连接程序。
 
-## Conclusion
+## 结语
 
-Why do we want this? The main class is completely independent and can be unit tested easily. We have achieved seperation of concerns on each dependency. Each dependent class can be individually unit tested. This tutorial shows both the concept of Inversion of Control, as well as a very basic use of Windsor. How does this tutorial compare to real-world use? Replace dependency1 with a File-Getter and replace dependency2 with a File-Parser. Both the File-Getter and the File-Parser would need to be injected into the main class, and yet all are autonomous and unit testable.
+我们为什么想做这些？main类是完全完全独立的并且可以更方便的进行单元测试。我们已经实现了对每个依赖项的关注分离。每个依赖类可以单独进行单元测试。本教程向我们展示了控制反转的概念和Windsor的基本用法。？用文件获取器（File-Getter）替换dependency1，用文件解析器（File-Parser）替换dependency2。文件获取器和文件解析器将会注入到main类中，但他们都是自动化、可单元测试的。
